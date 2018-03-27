@@ -10,10 +10,6 @@ class SessionRegisterTest extends \PHPUnit_Framework_TestCase
     {
         global $hello;
         $hello = 'world';
-        if (! empty($_SESSION)) {
-            $this->assertTrue(false);
-        }
-
         $return = \session_register('hello');
 
         $this->assertSame('world', $_SESSION['hello']);
@@ -25,15 +21,11 @@ class SessionRegisterTest extends \PHPUnit_Framework_TestCase
      */
     public function testSessionRegisterFail()
     {
+        $_SESSION = [];
         $hello = 'world2';
-        if (! empty($_SESSION)) {
-            $this->assertTrue(false);
-        }
-
         $return = \session_register('hello');
-        if (! empty($_SESSION)) {
-            $this->assertTrue(false);
-        }
+
+        $this->assertEmpty($_SESSION);
         $this->assertFalse($return);
     }
 }
